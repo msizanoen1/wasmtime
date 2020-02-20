@@ -172,7 +172,6 @@ pub(crate) fn enc_slice_of_wasi32_uintptr(
     ptr: wasi32::uintptr_t,
 ) -> Result<()> {
     let mut output_iter = raw_slice_for_enc::<wasi32::uintptr_t>(memory, slice, ptr)?.into_iter();
-
     for p in slice {
         *output_iter.next().unwrap() = PrimInt::to_le(*p);
     }

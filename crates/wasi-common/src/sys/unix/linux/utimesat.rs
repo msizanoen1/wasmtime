@@ -40,7 +40,7 @@ pub(crate) fn utimesat(
 /// [filetime]: https://github.com/alexcrichton/filetime/blob/master/src/unix/utimes.rs#L93
 fn to_timeval(ft: filetime::FileTime) -> libc::timeval {
     libc::timeval {
-        tv_sec: ft.seconds(),
+        tv_sec: ft.seconds() as libc::time_t,
         tv_usec: (ft.nanoseconds() / 1000) as libc::suseconds_t,
     }
 }

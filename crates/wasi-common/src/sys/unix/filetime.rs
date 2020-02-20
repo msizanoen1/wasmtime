@@ -16,7 +16,7 @@ cfg_if::cfg_if! {
         fn filetime_to_timespec(ft: &filetime::FileTime) -> Result<libc::timespec> {
             Ok(
                 libc::timespec {
-                    tv_sec: ft.seconds(),
+                    tv_sec: ft.seconds() as libc::time_t,
                     tv_nsec: ft.nanoseconds().try_into()?,
                 }
             )
@@ -55,11 +55,11 @@ pub(crate) fn to_timespec(ft: &FileTime) -> Result<libc::timespec> {
     let ts = match ft {
         FileTime::Now => libc::timespec {
             tv_sec: 0,
-            tv_nsec: UTIME_NOW,
+            tv_nsec: UTIME_NOW as libc::c_long,
         },
         FileTime::Omit => libc::timespec {
             tv_sec: 0,
-            tv_nsec: UTIME_OMIT,
+            tv_nsec: UTIME_OMIT as libc::c_long,
         },
         FileTime::FileTime(ft) => filetime_to_timespec(ft)?,
     };

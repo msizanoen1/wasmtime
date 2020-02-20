@@ -6,7 +6,7 @@ use crate::{dir::SeekLoc, Result};
 
 impl SeekLoc {
     pub unsafe fn from_raw(loc: i64) -> Result<Self> {
-        let loc = loc.into();
+        let loc = loc as libc::c_long;
         Ok(Self(loc))
     }
 }
